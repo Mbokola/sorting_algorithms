@@ -21,10 +21,10 @@ void bubble_sort(int *array, size_t size)
 				array[i - 1] ^= array[i];
 				counter = i;
 				print_array(array, len);
-				continue;
 			}
-			counter--;
 		}
+		if (counter == size)
+			break;
 		size = counter;
 	}
 }
