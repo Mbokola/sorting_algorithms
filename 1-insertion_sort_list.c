@@ -4,41 +4,47 @@
  *@list: list to sort
  *
  */
+
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *ptr;
+	listint_t *ptr = *list, *tmp, *tmp1 = NULL;
 
-	if (*list)
+	if (ptr)
 	{
-		ptr = (*list)->next;
-		while (ptr)
+		while (ptr->next)
 		{
-			while (ptr->n < ptr->prev->n && ptr->prev->prev)
+			if (ptr->n < ptr->next->n)
 			{
-				ptr->prev = ptr->prev->prev;
-				ptr->prev->next->next = ptr->next;
-				ptr->prev->next->prev = ptr;
-				ptr->next = ptr->prev->next;
-				ptr->prev->next = ptr;
-				print_list(*list);
-				if (ptr->next->next)
-					ptr->next->next->prev = ptr->next;
-				if (!ptr->prev->prev && ptr->n < ptr->prev->n)
-				{
-
-					ptr->prev->next = ptr->next;
-					ptr->prev->prev = ptr;
-					ptr->next->prev = ptr->prev;
-					ptr->next = ptr->prev;
-					ptr->prev = NULL;
-					*list = ptr;
-					print_list(*list);
-					ptr = ptr->next;
-				}
-
-			}
-			if (ptr)
 				ptr = ptr->next;
+				if (tmp1)
+				{
+					ptr = tmp1->next;
+					if (!ptr)
+						break;
+					ptr = tmp1;
+					tmp1 = NULL;
+				}
+			}
+			else
+			{
+				if (!tmp1)
+					tmp1 = ptr;
+				tmp = ptr->next;
+				if (tmp->next)
+					tmp->next->prev = ptr;
+				if (ptr->prev)
+					ptr->prev->next = tmp;
+				tmp->prev = ptr->prev;
+				ptr->next = tmp->next;
+				tmp->next = ptr;
+				ptr->prev = tmp;
+				if (tmp->prev)
+					ptr = tmp->prev;
+				if (!tmp->prev)
+					*list = tmp;
+				print_list(*list);
+			}
 		}
+
 	}
 }
