@@ -13,7 +13,7 @@ void insertion_sort_list(listint_t **list)
 	{
 		while (ptr->next)
 		{
-			if (ptr->n < ptr->next->n)
+			if (ptr->n <= ptr->next->n)
 			{
 				ptr = ptr->next;
 				if (tmp1)
