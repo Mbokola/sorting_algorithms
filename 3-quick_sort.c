@@ -2,7 +2,7 @@
 
 /**
  * quick_sort - sorts an array with the Quicksort algorithm
- * @array: array of ints to sort
+ * @array: array of integers to sort
  * @size: size of the array
  */
 void quick_sort(int *array, size_t size)
@@ -25,19 +25,20 @@ void quick_sort_helper(int *array, int low, int high, size_t size)
 	if (low < high)
 	{
 		int pivot = partition(array, low, high, size);
+
 		quick_sort_helper(array, low, pivot - 1, size);
 		quick_sort_helper(array, pivot + 1, high, size);
 	}
 }
 
 /**
- * partition - gives a pivot index for Quicksort
- * @array: array to find the pivot in
+ * partition - Lomuto partition scheme for Quicksort
+ * @array: array to partition
  * @low: index of the low element
  * @high: index of the high element
  * @size: size of the array
  *
- * Return: the index of the pivot element
+ * Return: index of the partition pivot
  */
 int partition(int *array, int low, int high, size_t size)
 {
@@ -46,10 +47,10 @@ int partition(int *array, int low, int high, size_t size)
 
 	for (j = low; j <= high - 1; j++)
 	{
-		if (array[j] <= pivot)
+		if (array[j] < pivot)
 		{
 			i++;
-			if (i != j && array[i] != array[j])
+			if (i != j)
 			{
 				swap(&array[i], &array[j]);
 				print_array(array, size);
