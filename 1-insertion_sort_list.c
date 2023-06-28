@@ -7,23 +7,16 @@
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *ptr = NULL, *tmp, *tmp1 = NULL;
+	listint_t *ptr = NULL, *tmp;
 
 	if (list)
 		ptr = *list;
 	if (ptr)
 	{
-		ptr = *list;
-		tmp1 = ptr;
 		while (ptr->next)
 		{
-			if (ptr->n <= ptr->next->n && tmp1 == ptr)
-			{
+			if (ptr->n <= ptr->next->n)
 				ptr = ptr->next;
-				tmp1 = ptr;
-			}
-			else if (ptr != tmp1 && ptr->n <= ptr->next->n)
-				ptr = tmp1;
 			else
 			{
 				tmp = ptr->next;
