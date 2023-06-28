@@ -1,47 +1,37 @@
 #include "sort.h"
-/**
- *insertion_sort_list - Sort list using insertion algo
- *@list: list to sort
- *
- */
 
+/**
+ * insertion_sort_list - sorting using insertion sort
+ * @list: double pointer to head of the list to sort
+ *
+ * Return: nothing
+ */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *ptr = NULL, *tmp, *tmp1 = NULL;
+	listint_t *temp, *current, *srt;
 
-	if (list)
-		ptr = *list;
-	if (ptr)
+	if (*list == NULL || (*list)->next == NULL)
+		return;
+	current = (*list)->next;
+	while (current != NULL)
 	{
-		ptr = *list;
-		tmp1 = ptr;
-		while (ptr->next)
+		temp = current->next;
+		srt = current->prev;
+		while (srt != NULL && srt->n > current->n)
 		{
-			if (ptr->n <= ptr->next->n && tmp1 == ptr)
-			{
-				ptr = ptr->next;
-				tmp1 = ptr;
-			}
-			else if (ptr != tmp1 && ptr->n <= ptr->next->n)
-				ptr = tmp1;
+			srt->next = current->next;
+			if (current->next != NULL)
+				current->next->prev = srt;
+			current->prev = srt->prev;
+			current->next = srt;
+			if (srt->prev != NULL)
+				srt->prev->next = current;
 			else
-			{
-				tmp = ptr->next;
-				if (tmp->next)
-					tmp->next->prev = ptr;
-				if (ptr->prev)
-					ptr->prev->next = tmp;
-				tmp->prev = ptr->prev;
-				ptr->next = tmp->next;
-				tmp->next = ptr;
-				ptr->prev = tmp;
-				if (tmp->prev)
-					ptr = tmp->prev;
-				if (!tmp->prev)
-					*list = tmp;
-				print_list(*list);
-			}
+				*list = current;
+			srt->prev = current;
+			srt = current->prev;
+			print_list(*list);
 		}
-
+		current = temp;
 	}
 }
