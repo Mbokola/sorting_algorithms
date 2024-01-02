@@ -5,7 +5,7 @@
 from base_caching import BaseCaching
 
 
-class LIFOCache(BaseCaching):
+class LRUCache(BaseCaching):
     """ A caching sytsem
     """
     def __init__(self):
@@ -18,18 +18,21 @@ class LIFOCache(BaseCaching):
         value for the key key """
         if key and item:
             if key in self.cache_data:
-                del self.cache_data[key]
+                del (self.cache_data[key])
                 self.cache_data[key] = item
                 return self.cache_data
             self.cache_data[key] = item
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                self.cache_data.popitem()
-                print(f"DISCARD: {self.cache_data.popitem()[0]}")
-                self.cache_data[key] = item
+                key = list(self.cache_data.keys())[0]
+                del (self.cache_data[key])
+                print(f"DISCARD: {key}")
 
     def get(self, key):
         """ Returns the value in self.cache_data linked to key
         """
         if not key or key not in self.cache_data:
             return None
+        item = self.cache_data[key]
+        del (self.cache_data[key])
+        self.cache_data[key] = item
         return self.cache_data[key]
