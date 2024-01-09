@@ -3,7 +3,7 @@
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, _
 
 app = Flask(__name__)
 # instantiate the Babel object in your app.
@@ -31,7 +31,9 @@ def get_locale():
 
 @app.route("/")
 def hello_world():
-    return render_template("2-index.html")
+    greeting = _("Hello world")
+    title = _("Welcome to Holberton")
+    return render_template("3-index.html", greeting=greeting, title=title)
 
 
 if __name__ == "__main__":
